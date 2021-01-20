@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
+import { colors } from 'styles/colors'
 
 export const GlobalStyle = createGlobalStyle`
+  
+  ${colors}
+  
   html,
   body {
     padding: 0;
