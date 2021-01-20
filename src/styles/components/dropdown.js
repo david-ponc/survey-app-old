@@ -9,6 +9,8 @@ const layout = css`
   padding: 0;
   user-select: none;
   cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
 `
 
 export const DetailsStyled = styled.details`
@@ -28,7 +30,7 @@ export const SummaryStyled = styled.summary`
   ${layout};
   //grid-template-columns: 1fr auto;
   outline: 0;
-  padding: 0.375em 0.5em;
+  padding: 0.5rem 1rem;
   
   span {
     display: inherit;
@@ -56,7 +58,7 @@ export const ItemStyled = styled.li`
   ${layout};
   grid-template-columns: auto 1fr;
   margin: 0;
-  padding: 0.375em 0.5em;
+  padding: 0.5rem 1rem;
   
   &:hover {
     background: var(--gray-300);
