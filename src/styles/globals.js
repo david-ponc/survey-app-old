@@ -20,5 +20,12 @@ export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  button {
+    outline: 0;
+    cursor: pointer;
+    font-size: 0.875rem;
   }
 `
