@@ -16,7 +16,6 @@ const layout = css`
 export const DetailsStyled = styled.details`
   ${layout};
   width: max-content;
-  margin: 2rem;
   background: var(--gray-400);
   color: var(--gray-200);
   position: relative;
