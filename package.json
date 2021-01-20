@@ -1,0 +1,26 @@
+{
+  "name": "survey-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src --fix"
+  },
+  "dependencies": {
+    "next": "10.0.5",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.1.0",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0"
+  }
+}
