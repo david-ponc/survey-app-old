@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import { DetailsStyled, SummaryStyled, OptionsStyled, ItemStyled } from 'styles/components/dropdown'
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi'
 import useDropdown from 'hooks/useDropdown'
 
 function Dropdown ({ options, children, onSelect, ...props }) {
-  const { detailsRef, select, handleChangeValue } = useDropdown({ onSelect, options })
+  const { detailsRef, open, select, handleChangeValue } = useDropdown({ onSelect, options })
 
   return (
     <DetailsStyled ref={detailsRef} {...props}>
