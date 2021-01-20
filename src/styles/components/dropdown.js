@@ -46,6 +46,8 @@ export const OptionsStyled = styled.ol`
   position: absolute;
   border-radius: 0 0 0.375rem 0.375rem;
   background: var(--gray-400);
+  color: var(--gray-200);
+  top: 100%;
   list-style: none;
   padding: 0;
 `
