@@ -8,9 +8,7 @@ export default function Home () {
 
   return (
     <Layout title="dashboard">
-      <Dropdown options={options} onSelect={setValue}>
-        {options[0].content}
-      </Dropdown>
+        <Dropdown options={options} onSelect={setValue} />
     </Layout>
   )
 }
