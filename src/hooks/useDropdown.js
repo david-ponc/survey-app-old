@@ -8,15 +8,22 @@ export default function useDropdown ({ onSelect, options }) {
   useEffect(() => {
     const { current } = detailsRef
     current.addEventListener('toggle', () => setOpen(current.open))
-    const [firstOption] = options
-    setSelect(firstOption)
-    onSelect(firstOption.value)
+    if (onSelect && options) {
+      const [firstOption] = options
+      onSelect && setSelect(firstOption)
+      onSelect && onSelect(firstOption.value)
+    }
   }, [])
 
   const handleChangeValue = (option) => {
     const { current } = detailsRef
     setSelect(option)
     onSelect(option.value)
+    hiddenOptions()
+  }
+
+  const hiddenOptions = () => {
+    const { current } = detailsRef
     current.open = false
   }
 
@@ -24,6 +31,7 @@ export default function useDropdown ({ onSelect, options }) {
     detailsRef,
     open,
     select,
-    handleChangeValue
+    handleChangeValue,
+    hiddenOptions
   }
 }
