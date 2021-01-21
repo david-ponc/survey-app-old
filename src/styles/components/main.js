@@ -7,3 +7,7 @@ export const MainStyled = styled.main`
   display: grid;
   grid-template-rows: auto auto 1fr;
 `
+
+export const MainContentStyled = styled.section`
+  padding: 2rem;
+`

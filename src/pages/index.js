@@ -20,7 +20,9 @@ export default function Home () {
         {/*  <Button actions={actions} droppable>Export</Button> */}
         {/* </section> */}
         <Aside />
-        <Main />
+        <Main>
+          <h1>Content of statistics page</h1>
+        </Main>
     </Layout>
   )
 }
