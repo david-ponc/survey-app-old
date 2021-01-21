@@ -5,6 +5,7 @@ function MyApp ({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Component {...pageProps} />
+      <div id="modal-container" />
     </>
   )
 }
