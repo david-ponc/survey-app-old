@@ -6,6 +6,7 @@ import Button from 'components/Button'
 import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
 import Aside from 'components/Aside'
+import Main from 'components/Main'
 
 export default function Home () {
   const [value, setValue] = useState(null)
@@ -19,6 +20,7 @@ export default function Home () {
         {/*  <Button actions={actions} droppable>Export</Button> */}
         {/* </section> */}
         <Aside />
+        <Main />
     </Layout>
   )
 }
