@@ -2,7 +2,6 @@ import Head from 'next/head'
 import styled from 'styled-components'
 
 function Layout ({ title, children, design = 'default' }) {
-  console.log(design)
   return (
     <>
       <Head>
@@ -20,6 +19,7 @@ const LayoutStyled = styled.div`
   display: grid;
   grid-template-columns: ${({ design }) => DESIGN[design].templateColumns};
   grid-template-rows: 1fr;
+  gap: 1.5rem;
 `
 
 const DESIGN = {
