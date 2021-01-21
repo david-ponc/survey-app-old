@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const HeaderStyled = styled.header`
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 2rem;
