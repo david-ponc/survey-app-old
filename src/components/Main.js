@@ -10,7 +10,7 @@ import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 
-export default function Main ({ children }) {
+export default function Main ({ children, id }) {
   const { route } = useRouter()
   const mainContentRef = useRef(null)
 
@@ -28,8 +28,8 @@ export default function Main ({ children }) {
           David Ponce
           <HiChevronDown/>
         </AvatarStyled>
-        {route === '/' && <Button actions={actions} droppable>Export</Button>}
-        {route === '/creator' && <Button>Publish</Button>}
+        {route === '/statistics/[identifier]' && <Button actions={actions} droppable>Export</Button>}
+        {route === '/creator/[identifier]' && <Button>Publish</Button>}
       </Header>
        <Tab />
       <MainContentStyled ref={mainContentRef}>
