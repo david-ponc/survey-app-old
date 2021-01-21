@@ -6,8 +6,11 @@ export const MainStyled = styled.main`
   background: var(--gray-600);
   display: grid;
   grid-template-rows: auto auto 1fr;
+  overflow: hidden;
 `
 
 export const MainContentStyled = styled.section`
+  height: 100%;
   padding: 2rem;
+  overflow-y: auto;
 `
