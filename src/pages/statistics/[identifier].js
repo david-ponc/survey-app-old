@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Layout from 'components/Layout'
 import Aside from 'components/Aside'
 import Main from 'components/Main'
