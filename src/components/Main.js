@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { MainStyled, MainContentStyled, ButtonsStyled } from 'styles/components/main'
+import { MainStyled, MainContentStyled, ButtonsStyled, AlertStyled } from 'styles/components/main'
 import Header from 'components/Header'
 import Tab from 'components/Tab'
 import { AvatarStyled } from 'styles/components/header'
@@ -11,6 +11,8 @@ import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import useFirebase from 'hooks/useFirebase'
+import { IoClose } from 'react-icons/io5'
+import { TiInfo } from 'react-icons/ti'
 
 export default function Main ({ children, survey, blocks }) {
   const { route, query: { identifier } } = useRouter()
@@ -39,12 +41,19 @@ export default function Main ({ children, survey, blocks }) {
         {route === '/creator/[identifier]' && (
           <ButtonsStyled>
             <Button onClick={handlePublish}>Publish</Button>
-            {route === '/creator/[identifier]' && survey.survey.length > 1 && <Button><RiShareLine size={17}/></Button>}
+            {survey.survey.length > 1 && <Button><RiShareLine size={17}/></Button>}
           </ButtonsStyled>
         )}
       </Header>
        <Tab />
       <MainContentStyled ref={mainContentRef}>
+        {survey.survey.length < 2 && (
+          <AlertStyled>
+            <TiInfo size={20} />
+            You {"don't"} have enough blocks to publish this survey
+            <IoClose />
+          </AlertStyled>
+        ) }
         {children}
       </MainContentStyled>
     </MainStyled>

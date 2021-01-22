@@ -21,3 +21,18 @@ export const ButtonsStyled = styled.div`
   align-items: center;
   gap: 0.5rem;
 `
+
+export const AlertStyled = styled.span`
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--gray-100);
+  border-radius: 0.375rem;
+  color: var(--gray-500);
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+`

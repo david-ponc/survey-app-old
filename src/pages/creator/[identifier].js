@@ -38,7 +38,7 @@ export async function getServerSideProps ({ params, ...ctx }) {
   if (!survey) {
     redirectUser(ctx, '/')
   }
-  if (!survey?.survey) {
+  if (!survey?.survey || !survey?.survey.length) {
     survey.survey = [...initialBlocks]
   }
   return {
