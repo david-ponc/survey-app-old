@@ -16,6 +16,7 @@ export const H2Styled = styled.h2`
   grid-template-columns: auto 1fr;
   gap: 1rem;
   align-items: center;
+  color: #456DD4;
 `
 
 export const CreateSurveyStyled = styled.div`
@@ -57,6 +58,10 @@ export const LinkStyled = styled.a`
   padding: 0.75rem;
   background: ${({ active }) => active ? 'var(--gray-300)' : 'var(--gray-600)'};
   border-radius: 3rem;
+
+  & > svg {
+    color: ${({ active }) => active ? '#456DD4' : 'var(--gray-200)'};
+  }
   
   &:hover {
     background: var(--gray-300);
