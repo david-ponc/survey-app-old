@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/statistics',
+        destination: '/creator',
         permanent: true
       }
     ]

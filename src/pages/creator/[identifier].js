@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Layout from 'components/Layout'
 import Aside from 'components/Aside'
 import Main from 'components/Main'
@@ -8,6 +8,10 @@ import { Router } from 'next/router'
 
 export default function Creator ({ surveys, survey }) {
   const [blocks, setBlocks] = useState(survey.survey)
+
+  useEffect(() => {
+    setBlocks(survey.survey)
+  }, [survey])
 
   return (
     <Layout title="creator" design="withAside">
@@ -35,7 +39,7 @@ export async function getServerSideProps ({ params, ...ctx }) {
     redirectUser(ctx, '/')
   }
   if (!survey?.survey) {
-    survey.survey = initialBlocks
+    survey.survey = [...initialBlocks]
   }
   return {
     props: {

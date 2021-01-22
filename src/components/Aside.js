@@ -42,7 +42,7 @@ export default function Aside ({ surveys: initialSurveys }) {
           {
             surveys.map(survey => {
               return (
-                <Link href={`/statistics/${survey.id}`} key={survey.id} passHref>
+                <Link href={`/creator/${survey.id}`} key={survey.id} passHref>
                   <LinkStyled active={identifier === survey.id} ><HiOutlineClipboardList size={20}/> {survey.name}</LinkStyled>
                 </Link>
               )

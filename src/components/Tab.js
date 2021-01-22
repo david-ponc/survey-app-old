@@ -9,11 +9,11 @@ export default function Tab () {
   return (
     <SectionStyled>
       <NavStyled>
-        <Link href={`/statistics/${identifier}`}>
-          <LinkStyled active={active === '/statistics/[identifier]'}>Statistics</LinkStyled>
-        </Link>
         <Link href={`/creator/${identifier}`}>
           <LinkStyled active={active === '/creator/[identifier]'}>Creator</LinkStyled>
+        </Link>
+        <Link href={`/statistics/${identifier}`}>
+          <LinkStyled active={active === '/statistics/[identifier]'}>Statistics</LinkStyled>
         </Link>
       </NavStyled>
     </SectionStyled>
