@@ -2,11 +2,16 @@ import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { IoClose } from 'react-icons/io5'
 import Button from 'components/Button'
+import useFirebase from 'hooks/useFirebase'
+import { useRef } from 'react'
 
 export default function CreateSurveyModal ({ closeModal }) {
-  const handleSubmit = (e) => {
+  const inputRef = useRef(null)
+  const { createSurvey } = useFirebase()
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Send name to server')
+    await createSurvey(inputRef.current.value)
     closeModal()
   }
 
@@ -21,7 +26,7 @@ export default function CreateSurveyModal ({ closeModal }) {
           <ContentStyled>
             <label>
               Survey name
-              <input type="text" placeholder="My survey name"/>
+              <input ref={inputRef} type="text" placeholder="My survey name"/>
             </label>
             <Button>Create Survey</Button>
           </ContentStyled>

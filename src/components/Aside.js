@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { AsideStyled, CirclePlusStyled, CreateSurveyStyled, H2Styled, LinkStyled, NavSurveysStyled } from 'styles/components/aside'
 import { HiOutlineClipboardList, HiViewGrid } from 'react-icons/hi'
 import { BiPlus } from 'react-icons/bi'
 import CreateSurveyModal from 'components/CreateSurveyModal'
+import { useRouter } from 'next/router'
+import useFirebase from 'hooks/useFirebase'
 
-export default function Aside () {
+export default function Aside ({ surveys: initialSurveys }) {
+  const [surveys, setSurveys] = useState(initialSurveys)
+  const { query: { identifier } } = useRouter()
   const [visible, setVisible] = useState(false)
+  const { getSurveysObserver } = useFirebase()
+
+  useEffect(() => {
+    const unobserve = getSurveysObserver(setSurveys)
+    return () => {
+      unobserve()
+    }
+  }, [])
 
   const toggleModal = () => {
     setVisible(!visible)
@@ -27,15 +39,15 @@ export default function Aside () {
           Create new survey
         </CreateSurveyStyled>
         <NavSurveysStyled>
-          <Link href="/statistics/as9dfjsad-90as9uias" passHref>
-            <LinkStyled><HiOutlineClipboardList size={20}/> Survey 2020</LinkStyled>
-          </Link>
-          <Link href="/statistics/a98sduadjasdla[sp9d" passHref>
-            <LinkStyled><HiOutlineClipboardList size={20}/> Name of survey</LinkStyled>
-          </Link>
-          <Link href="/statistics/a0s9duas98djaasdoij" passHref>
-            <LinkStyled><HiOutlineClipboardList size={20}/> One more survey</LinkStyled>
-          </Link>
+          {
+            surveys.map(survey => {
+              return (
+                <Link href={`/statistics/${survey.id}`} key={survey.id} passHref>
+                  <LinkStyled active={identifier === survey.id} ><HiOutlineClipboardList size={20}/> {survey.name}</LinkStyled>
+                </Link>
+              )
+            })
+          }
         </NavSurveysStyled>
       </AsideStyled>
       {visible && <CreateSurveyModal closeModal={hiddenModal}/>}

@@ -10,7 +10,7 @@ import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 
-export default function Main ({ children, id }) {
+export default function Main ({ children }) {
   const { route } = useRouter()
   const mainContentRef = useRef(null)
 
@@ -22,7 +22,7 @@ export default function Main ({ children, id }) {
   return (
     <MainStyled>
       <Header>
-        <h2>Encuesta de prueba</h2>
+        <h2>{'Name survey'}</h2>
         <AvatarStyled>
           <FaUserCircle size={26} />
           David Ponce
