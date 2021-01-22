@@ -9,15 +9,34 @@ import Button from 'components/Button'
 import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
 import { useRouter } from 'next/router'
+import useFirebase from 'hooks/useFirebase'
 
-export default function Main ({ children, survey }) {
-  const { route } = useRouter()
+export default function Main ({ children, survey, blocks }) {
+  const { route, query: { identifier } } = useRouter()
   const mainContentRef = useRef(null)
+  const { publishSurvey } = useFirebase()
 
   useEffect(() => {
     const element = mainContentRef.current
     element.style.height = `${element.offsetHeight}px`
   }, [])
+
+  const handlePublish = () => {
+    // console.log([
+    //   {
+    //     name: 'Estas cansado?',
+    //     type: 'Multiple',
+    //     options: [
+    //       { name: 'Para nada' },
+    //       { name: 'Un poco' },
+    //       { name: 'Algo' },
+    //       { name: 'No puedo mas' }
+    //     ],
+    //     answer: null
+    //   }
+    // ])
+    publishSurvey(identifier, blocks)
+  }
 
   return (
     <MainStyled>
@@ -29,7 +48,7 @@ export default function Main ({ children, survey }) {
           <HiChevronDown/>
         </AvatarStyled>
         {route === '/statistics/[identifier]' && <Button actions={actions} droppable>Export</Button>}
-        {route === '/creator/[identifier]' && <Button>Publish</Button>}
+        {route === '/creator/[identifier]' && <Button onClick={handlePublish}>Publish</Button>}
       </Header>
        <Tab />
       <MainContentStyled ref={mainContentRef}>

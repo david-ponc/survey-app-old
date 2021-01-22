@@ -1,42 +1,67 @@
 import { useState } from 'react'
 import Dropdown from 'components/Dropdown'
 import { BiListUl, BiParagraph } from 'react-icons/bi'
-import { BlocksStyled, FormStyled, HeaderStyled, SectionStyled, RadioStyled, AddOptionStyled, AddBlockStyled } from 'styles/components/block'
+import {
+  BlocksStyled,
+  FormStyled,
+  HeaderStyled,
+  SectionStyled,
+  RadioStyled,
+  AddOptionStyled,
+  AddBlockStyled
+} from 'styles/components/block'
 import { MdAdd, MdRadioButtonUnchecked } from 'react-icons/md'
 import { FiPlusCircle, FiTrash2 } from 'react-icons/fi'
 
-export default function Block () {
-  const [blocks, setBlocks] = useState([...initialBlocks])
-
+export default function Block ({ blocks, setBlocks }) {
+  // const [fields, setFields] = useState(initialFields)
   const addNewBlock = () => {
     const newBlocks = [...blocks]
-    newBlocks.push({ name: '', type: 'Text' })
+    newBlocks.push({ title: '', type: 'Text', value: '' })
     setBlocks(newBlocks)
   }
 
-  const changeTypeBlock = (id, type, firstOption) => {
+  const changeTypeBlock = (i, type, firstOption) => {
     const newBlocks = [...blocks]
-    newBlocks[id].type = type === firstOption ? firstOption : type
+    newBlocks[i].type = type === firstOption ? firstOption : type
+    if (newBlocks[i].type === 'Multiple') {
+      newBlocks[i].options = [{ value: '' }]
+    } else {
+      delete newBlocks[i].options
+    }
+    setBlocks(newBlocks)
+    // console.table(blocks[i])
+  }
+
+  const handleChangeOptions = (news, i) => {
+    const newBlocks = [...blocks]
+    if (newBlocks[i]?.options) {
+      newBlocks[i].options = [...news]
+    } else { console.log('Problemas al actualizar las opciones del bloque') }
+    setBlocks(newBlocks)
+  }
+
+  const handleChangeTitle = (evt, i) => {
+    const newBlocks = [...blocks]
+    newBlocks[i].title = evt.target.value
     setBlocks(newBlocks)
   }
 
   return (
     <BlocksStyled>
       {
-        blocks.map((block, i) => {
-          return (
-            <FormStyled key={i}>
-              <HeaderStyled>
-                <input type="text" placeholder="Name block"/>
-                <Dropdown options={options} onSelect={(type) => changeTypeBlock(i, type, block.type)} />
-              </HeaderStyled>
-              <SectionStyled>
-                {block.type === 'Text' && <textarea placeholder="Write your answer here" readOnly={true} />}
-                {block.type === 'Multiple' && <RadioComponent />}
-              </SectionStyled>
-            </FormStyled>
-          )
-        })
+        blocks.map((block, i) => (
+          <FormStyled key={i}>
+            <HeaderStyled>
+              <input type="text" placeholder="Name block" value={block.title} onChange={evt => handleChangeTitle(evt, i)} />
+              <Dropdown options={options} onSelect={(type) => changeTypeBlock(i, type, block.type)} />
+            </HeaderStyled>
+            <SectionStyled>
+              {block.type === 'Text' && <textarea placeholder="Write your answer here" readOnly={true} />}
+              {block.type === 'Multiple' && <RadioComponent options={block.options} setOptions={(news) => handleChangeOptions(news, i)} />}
+            </SectionStyled>
+          </FormStyled>
+        ))
       }
       <AddBlockStyled onClick={addNewBlock}>
         <FiPlusCircle size={24} />
@@ -46,12 +71,10 @@ export default function Block () {
   )
 }
 
-function RadioComponent () {
-  const [options, setOptions] = useState([...initialOptions])
-
+function RadioComponent ({ options, setOptions }) {
   const addNewOption = () => {
     const newOptions = [...options]
-    newOptions.push({ name: `Write name option ${options.length + 1}` })
+    newOptions.push({ value: '' })
     setOptions(newOptions)
   }
 
@@ -64,6 +87,13 @@ function RadioComponent () {
       console.log('Should be at least one option')
     }
   }
+
+  const handleChange = (evt, i) => {
+    const newOptions = [...options]
+    newOptions[i].value = evt.target.value
+    setOptions(newOptions)
+  }
+
   return (
     <>
       {
@@ -71,7 +101,13 @@ function RadioComponent () {
           return (
             <RadioStyled key={i}>
               <MdRadioButtonUnchecked size={24} />
-              <input type="text" placeholder={option.name}/>
+              <input
+                name="option"
+                type="text"
+                placeholder="Write name option here"
+                value={option.value}
+                onChange={evt => handleChange(evt, i)}
+              />
               <FiTrash2 size={20} onClick={() => removeOption(i)}/>
             </RadioStyled>
           )
@@ -84,19 +120,6 @@ function RadioComponent () {
     </>
   )
 }
-
-const initialBlocks = [
-  {
-    name: '',
-    type: 'Text'
-  }
-]
-
-const initialOptions = [
-  {
-    name: 'Write name option 1'
-  }
-]
 
 const options = [
   {
@@ -112,5 +135,14 @@ const options = [
       <BiListUl key={'Multiple'} />,
       'Multiple'
     ]
+  }
+]
+
+const initialFields = [
+  {
+    title: '',
+    type: 'Text',
+    value: '',
+    options: []
   }
 ]

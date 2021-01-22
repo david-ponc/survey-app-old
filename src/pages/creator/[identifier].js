@@ -1,31 +1,52 @@
+import { useState } from 'react'
 import Layout from 'components/Layout'
 import Aside from 'components/Aside'
 import Main from 'components/Main'
 import Block from 'components/Block'
 import useFirebase from 'hooks/useFirebase'
-import { useRouter } from 'next/router'
+import { Router } from 'next/router'
 
 export default function Creator ({ surveys, survey }) {
-  const { query: { identifier } } = useRouter()
+  const [blocks, setBlocks] = useState([...initialBlocks])
 
   return (
     <Layout title="creator" design="withAside">
-      <Aside id={identifier} surveys={surveys} />
-      <Main id={identifier} survey={survey}>
-        <Block />
+      <Aside surveys={surveys} />
+      <Main blocks={blocks} survey={survey}>
+        <Block blocks={blocks} setBlocks={setBlocks} />
       </Main>
     </Layout>
   )
 }
 
-export async function getServerSideProps ({ params }) {
+const initialBlocks = [
+  {
+    title: '',
+    type: 'Text',
+    value: ''
+  }
+]
+
+export async function getServerSideProps ({ params, ...ctx }) {
   const { getSurveys, getSurveyByIdentifier } = useFirebase()
   const surveys = await getSurveys()
   const survey = await getSurveyByIdentifier(params.identifier)
+  if (!survey) {
+    redirectUser(ctx, '/')
+  }
   return {
     props: {
       surveys,
       survey
     }
+  }
+}
+
+function redirectUser (ctx, location) {
+  if (ctx.req) {
+    ctx.res.writeHead(302, { Location: location })
+    ctx.res.end()
+  } else {
+    Router.push(location)
   }
 }

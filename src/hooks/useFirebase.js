@@ -17,17 +17,14 @@ const firebaseConfig = {
 export default function useFirebase () {
   const surveysColl = firebase.firestore().collection('/surveys')
 
-  const getSurveys = () => {
-    return surveysColl
-      .get()
-      .then(({ docs }) => {
-        return docs.map(doc => {
-          return {
-            id: doc.id,
-            ...doc.data()
-          }
-        })
-      })
+  const getSurveys = async () => {
+    const { docs } = await surveysColl.get()
+    return docs.map(doc => {
+      return {
+        id: doc.id,
+        ...doc.data()
+      }
+    })
   }
 
   const getSurveysObserver = (callback) => {
@@ -44,23 +41,28 @@ export default function useFirebase () {
       })
   }
 
-  const getSurveyByIdentifier = (identifier) => {
-    return surveysColl
+  const getSurveyByIdentifier = async (identifier) => {
+    const doc = await surveysColl
       .doc(identifier)
       .get()
-      .then((doc) => {
-        return doc.data()
-      })
+    return { id: doc.id, ...doc.data() }
   }
 
   const createSurvey = (name) => {
-    return surveysColl.add({ name })
+    return surveysColl.add({ name, survey: [] })
+  }
+
+  const publishSurvey = async (identifier, survey) => {
+    console.log(identifier, survey)
+    const doc = surveysColl.doc(identifier)
+    return await doc.update({ survey: survey })
   }
 
   return {
     createSurvey,
     getSurveys,
     getSurveysObserver,
-    getSurveyByIdentifier
+    getSurveyByIdentifier,
+    publishSurvey
   }
 }
