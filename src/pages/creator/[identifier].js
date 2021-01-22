@@ -7,7 +7,7 @@ import useFirebase from 'hooks/useFirebase'
 import { Router } from 'next/router'
 
 export default function Creator ({ surveys, survey }) {
-  const [blocks, setBlocks] = useState([...initialBlocks])
+  const [blocks, setBlocks] = useState(survey.survey)
 
   return (
     <Layout title="creator" design="withAside">
@@ -33,6 +33,9 @@ export async function getServerSideProps ({ params, ...ctx }) {
   const survey = await getSurveyByIdentifier(params.identifier)
   if (!survey) {
     redirectUser(ctx, '/')
+  }
+  if (!survey?.survey) {
+    survey.survey = initialBlocks
   }
   return {
     props: {

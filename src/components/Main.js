@@ -22,19 +22,6 @@ export default function Main ({ children, survey, blocks }) {
   }, [])
 
   const handlePublish = () => {
-    // console.log([
-    //   {
-    //     name: 'Estas cansado?',
-    //     type: 'Multiple',
-    //     options: [
-    //       { name: 'Para nada' },
-    //       { name: 'Un poco' },
-    //       { name: 'Algo' },
-    //       { name: 'No puedo mas' }
-    //     ],
-    //     answer: null
-    //   }
-    // ])
     publishSurvey(identifier, blocks)
   }
 

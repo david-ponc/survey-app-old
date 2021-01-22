@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Dropdown from 'components/Dropdown'
 import { BiListUl, BiParagraph } from 'react-icons/bi'
 import {
@@ -14,7 +13,6 @@ import { MdAdd, MdRadioButtonUnchecked } from 'react-icons/md'
 import { FiPlusCircle, FiTrash2 } from 'react-icons/fi'
 
 export default function Block ({ blocks, setBlocks }) {
-  // const [fields, setFields] = useState(initialFields)
   const addNewBlock = () => {
     const newBlocks = [...blocks]
     newBlocks.push({ title: '', type: 'Text', value: '' })
@@ -24,8 +22,11 @@ export default function Block ({ blocks, setBlocks }) {
   const changeTypeBlock = (i, type, firstOption) => {
     const newBlocks = [...blocks]
     newBlocks[i].type = type === firstOption ? firstOption : type
+    // console.log(newBlocks[i])
     if (newBlocks[i].type === 'Multiple') {
-      newBlocks[i].options = [{ value: '' }]
+      newBlocks[i]?.options
+        ? newBlocks[i].options = [...newBlocks[i].options]
+        : newBlocks[i].options = [{ value: '' }]
     } else {
       delete newBlocks[i].options
     }
@@ -54,7 +55,7 @@ export default function Block ({ blocks, setBlocks }) {
           <FormStyled key={i}>
             <HeaderStyled>
               <input type="text" placeholder="Name block" value={block.title} onChange={evt => handleChangeTitle(evt, i)} />
-              <Dropdown options={options} onSelect={(type) => changeTypeBlock(i, type, block.type)} />
+              <Dropdown options={options} onSelect={(type) => changeTypeBlock(i, type, block.type)} value={block.type} />
             </HeaderStyled>
             <SectionStyled>
               {block.type === 'Text' && <textarea placeholder="Write your answer here" readOnly={true} />}
@@ -121,28 +122,12 @@ function RadioComponent ({ options, setOptions }) {
   )
 }
 
-const options = [
-  {
+const options = new Map()
+  .set('Text', {
     value: 'Text',
-    content: [
-      <BiParagraph key={'Text'} />,
-      'Text'
-    ]
-  },
-  {
+    content: <><BiParagraph key={'Text'} /> Text</>
+  })
+  .set('Multiple', {
     value: 'Multiple',
-    content: [
-      <BiListUl key={'Multiple'} />,
-      'Multiple'
-    ]
-  }
-]
-
-const initialFields = [
-  {
-    title: '',
-    type: 'Text',
-    value: '',
-    options: []
-  }
-]
+    content: <><BiListUl key={'Multiple'} /> Multiple </>
+  })

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 
-export default function useDropdown ({ onSelect, options }) {
+export default function useDropdown ({ onSelect, options, value }) {
   const detailsRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [select, setSelect] = useState(null)
@@ -8,15 +8,14 @@ export default function useDropdown ({ onSelect, options }) {
   useEffect(() => {
     const { current } = detailsRef
     current.addEventListener('toggle', () => setOpen(current.open))
-    if (onSelect && options) {
-      const [firstOption] = options
-      onSelect && setSelect(firstOption)
-      onSelect && onSelect(firstOption.value)
+    if (onSelect && options && value) {
+      onSelect && setSelect(options.get(value))
+      onSelect && onSelect(options.get(value).value)
     }
   }, [])
 
   const handleChangeValue = (option) => {
-    const { current } = detailsRef
+    console.log('click change value')
     setSelect(option)
     onSelect(option.value)
     hiddenOptions()

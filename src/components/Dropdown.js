@@ -2,9 +2,8 @@ import { DetailsStyled, SummaryStyled, OptionsStyled, ItemStyled } from 'styles/
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi'
 import useDropdown from 'hooks/useDropdown'
 
-function Dropdown ({ options, children, onSelect, ...props }) {
-  const { detailsRef, open, select, handleChangeValue } = useDropdown({ onSelect, options })
-
+function Dropdown ({ options, children, onSelect, value, ...props }) {
+  const { detailsRef, open, select, handleChangeValue } = useDropdown({ onSelect, options, value })
   return (
     <DetailsStyled ref={detailsRef} {...props}>
       <SummaryStyled>
@@ -12,20 +11,21 @@ function Dropdown ({ options, children, onSelect, ...props }) {
         {open ? <HiChevronUp/> : <HiChevronDown /> }
       </SummaryStyled>
       <OptionsStyled>
-        {
-          options.map((option) => {
-            return <Item key={option.value} {...option} onClick={() => handleChangeValue(option)} />
-          })
+        { open &&
+          Array.from(options.values()).map((option) => {
+            return <Item key={option.value} content={option.content} onClick={() => handleChangeValue(option) } />
+          }
+          )
         }
       </OptionsStyled>
     </DetailsStyled>
   )
 }
 
-function Item (props) {
+function Item ({ content, ...props }) {
   return (
     <ItemStyled {...props}>
-      {props?.content}
+      {content}
     </ItemStyled>
   )
 }
