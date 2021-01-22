@@ -1,10 +1,11 @@
 import { useRef, useEffect } from 'react'
-import { MainStyled, MainContentStyled } from 'styles/components/main'
+import { MainStyled, MainContentStyled, ButtonsStyled } from 'styles/components/main'
 import Header from 'components/Header'
 import Tab from 'components/Tab'
 import { AvatarStyled } from 'styles/components/header'
 import { FaUserCircle } from 'react-icons/fa'
 import { HiChevronDown } from 'react-icons/hi'
+import { RiShareLine } from 'react-icons/ri'
 import Button from 'components/Button'
 import { VscFilePdf } from 'react-icons/vsc'
 import { BsFileEarmarkText } from 'react-icons/bs'
@@ -35,7 +36,12 @@ export default function Main ({ children, survey, blocks }) {
           <HiChevronDown/>
         </AvatarStyled>
         {route === '/statistics/[identifier]' && <Button actions={actions} droppable>Export</Button>}
-        {route === '/creator/[identifier]' && <Button onClick={handlePublish}>Publish</Button>}
+        {route === '/creator/[identifier]' && (
+          <ButtonsStyled>
+            <Button onClick={handlePublish}>Publish</Button>
+            {route === '/creator/[identifier]' && survey.survey.length > 1 && <Button><RiShareLine size={17}/></Button>}
+          </ButtonsStyled>
+        )}
       </Header>
        <Tab />
       <MainContentStyled ref={mainContentRef}>

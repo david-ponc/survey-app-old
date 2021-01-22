@@ -14,3 +14,10 @@ export const MainContentStyled = styled.section`
   padding: 2rem;
   overflow-y: auto;
 `
+
+export const ButtonsStyled = styled.div`
+  display: inherit;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.5rem;
+`
