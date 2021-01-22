@@ -44,6 +44,15 @@ export default function useFirebase () {
       })
   }
 
+  const getSurveyByIdentifier = (identifier) => {
+    return surveysColl
+      .doc(identifier)
+      .get()
+      .then((doc) => {
+        return doc.data()
+      })
+  }
+
   const createSurvey = (name) => {
     return surveysColl.add({ name })
   }
@@ -51,6 +60,7 @@ export default function useFirebase () {
   return {
     createSurvey,
     getSurveys,
-    getSurveysObserver
+    getSurveysObserver,
+    getSurveyByIdentifier
   }
 }
