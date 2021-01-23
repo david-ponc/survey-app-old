@@ -22,7 +22,7 @@ export default function Button ({
   }
 
   return (
-    <ButtonStyled {...props} color={color} onClick={handleClick}>
+    <ButtonStyled {...props} design={design} color={color} onClick={handleClick}>
       {children}
     </ButtonStyled>
   )

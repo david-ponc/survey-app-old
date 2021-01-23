@@ -7,10 +7,21 @@ const COLORS = {
   }
 }
 
+const DESIGNS = {
+  normal: {
+    padding: '0.5em 1rem',
+    width: 'max-content'
+  },
+  full: {
+    padding: '0.75rem 1.5rem',
+    width: '100%'
+  }
+}
+
 export const ButtonStyled = styled.button`
   outline: 0;
   border: 0;
-  padding: 0.5em 1rem;
+  padding: ${({ design }) => DESIGNS[design].padding};
   display: grid;
   grid-auto-flow: column;
   gap: 0.5rem;
@@ -18,7 +29,7 @@ export const ButtonStyled = styled.button`
   border-radius: 0.375rem;
   font-weight: 500;
   user-select: none;
-  width: max-content;
+  width: ${({ design }) => DESIGNS[design].width};
   background: ${({ color }) => COLORS[color].background};
   color: ${({ color }) => COLORS[color].color};
 `

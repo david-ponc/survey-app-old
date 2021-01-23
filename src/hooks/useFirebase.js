@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyANVnjAx_N3fKg0L0tPHaaPV9DwaMahmdo',
@@ -16,6 +17,21 @@ const firebaseConfig = {
 
 export default function useFirebase () {
   const surveysColl = firebase.firestore().collection('/surveys')
+
+  const loginWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return firebase.auth().signInWithPopup(provider)
+  }
+
+  const onAuthStateChanged = (callback) => {
+    return firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        callback(user)
+      } else {
+        console.log('The user is not logged in')
+      }
+    })
+  }
 
   const getSurveys = async () => {
     const { docs } = await surveysColl.get()
@@ -62,6 +78,8 @@ export default function useFirebase () {
     getSurveys,
     getSurveysObserver,
     getSurveyByIdentifier,
-    publishSurvey
+    publishSurvey,
+    onAuthStateChanged,
+    loginWithGoogle
   }
 }
