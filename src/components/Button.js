@@ -1,6 +1,7 @@
-import { ButtonStyled, DetailsStyled, SummaryStyled, OptionsStyled, ItemStyled } from 'styles/components/button'
+import { ButtonStyled, DetailsStyled, SummaryStyled, OptionsStyled, ItemStyled, LoaderStyled } from 'styles/components/button'
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi'
 import useDropdown from 'hooks/useDropdown'
+import { useState } from 'react'
 
 export default function Button ({
   color = 'primary',
@@ -9,8 +10,13 @@ export default function Button ({
   actions,
   droppable, ...props
 }) {
+  const [loading, setLoading] = useState(false)
   const handleClick = () => {
-    !droppable && props?.onClick && props.onClick()
+    !droppable && props?.onClick && setLoading(true)
+    setTimeout(() => {
+      !droppable && props?.onClick && props.onClick()
+      !droppable && props?.onClick && setLoading(false)
+    }, 1200)
   }
 
   if (droppable) {
@@ -23,7 +29,8 @@ export default function Button ({
 
   return (
     <ButtonStyled {...props} design={design} color={color} onClick={handleClick}>
-      {children}
+      {loading && <>Posting <LoaderStyled size={17} /> </>}
+      {!loading && children}
     </ButtonStyled>
   )
 }

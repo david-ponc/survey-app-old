@@ -118,3 +118,22 @@ export const ItemStyled = styled.li`
     background: var(--gray-200);
   }
 `
+export const LoaderStyled = styled.div`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid;
+  border-color: rgba(0,0,0,0.08) var(--gray-400) var(--gray-400) var(--gray-400);
+  animation: LoaderAnimate 0.55s linear infinite;
+
+  @keyframes LoaderAnimate {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(359deg);
+    }
+  }
+`
