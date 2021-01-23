@@ -4,14 +4,16 @@ import { IoClose } from 'react-icons/io5'
 import Button from 'components/Button'
 import useFirebase from 'hooks/useFirebase'
 import { useRef } from 'react'
+import useUser from 'hooks/useUser'
 
 export default function CreateSurveyModal ({ closeModal }) {
   const inputRef = useRef(null)
   const { createSurvey } = useFirebase()
+  const user = useUser()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await createSurvey(inputRef.current.value)
+    await createSurvey(inputRef.current.value, user.uid)
     closeModal()
   }
 

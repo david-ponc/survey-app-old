@@ -33,7 +33,7 @@ export default function useFirebase () {
     })
   }
 
-  const getSurveys = async () => {
+  const getSurveys = async (userId) => {
     const { docs } = await surveysColl.get()
     return docs.map(doc => {
       return {
@@ -43,7 +43,7 @@ export default function useFirebase () {
     })
   }
 
-  const getSurveysObserver = (callback) => {
+  const getSurveysObserver = (callback, userId) => {
     return surveysColl
       .onSnapshot(({ docs }) => {
         const surveys = docs.map(doc => {
@@ -64,8 +64,8 @@ export default function useFirebase () {
     return { id: doc.id, ...doc.data() }
   }
 
-  const createSurvey = (name) => {
-    return surveysColl.add({ name, survey: [] })
+  const createSurvey = (name, userId) => {
+    return surveysColl.add({ name, user: userId, survey: [] })
   }
 
   const publishSurvey = async (identifier, survey) => {
