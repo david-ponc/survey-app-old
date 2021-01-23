@@ -15,7 +15,7 @@ import { IoClose } from 'react-icons/io5'
 import { TiInfo } from 'react-icons/ti'
 
 export default function Main ({ children, survey, blocks }) {
-  const { route, query: { identifier } } = useRouter()
+  const { route, query: { identifier }, push } = useRouter()
   const mainContentRef = useRef(null)
   const { publishSurvey } = useFirebase()
 
@@ -26,6 +26,7 @@ export default function Main ({ children, survey, blocks }) {
 
   const handlePublish = () => {
     publishSurvey(identifier, blocks)
+    push(`/creator/${identifier}`)
   }
 
   return (

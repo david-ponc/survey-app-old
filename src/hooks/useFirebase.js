@@ -53,7 +53,6 @@ export default function useFirebase () {
   }
 
   const publishSurvey = async (identifier, survey) => {
-    console.log(identifier, survey)
     const doc = surveysColl.doc(identifier)
     return await doc.update({ survey: survey })
   }
