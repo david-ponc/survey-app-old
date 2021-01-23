@@ -20,11 +20,12 @@ export default function Statistics ({ surveys, survey }) {
 export async function getServerSideProps ({ params, ...ctx }) {
   const { getSurveys, getSurveyByIdentifier } = useFirebase()
   let survey = {}
+  let surveys = []
   if (params?.identifier) {
     const [identifier] = params.identifier
     survey = await getSurveyByIdentifier(identifier)
+    surveys = await getSurveys(survey.user)
   }
-  const surveys = await getSurveys()
 
   if (!survey) {
     redirectUser(ctx, '/')
