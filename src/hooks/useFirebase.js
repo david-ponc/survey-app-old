@@ -35,23 +35,15 @@ export default function useFirebase () {
 
   const getSurveys = async (userId) => {
     const { docs } = await surveysColl.get()
-    return docs.map(doc => {
-      return {
-        id: doc.id,
-        ...doc.data()
-      }
-    })
+    const allSurveys = docs.map(doc => { return { id: doc.id, ...doc.data() } })
+    return allSurveys.filter(survey => survey.user === userId)
   }
 
   const getSurveysObserver = (callback, userId) => {
     return surveysColl
       .onSnapshot(({ docs }) => {
-        const surveys = docs.map(doc => {
-          return {
-            id: doc.id,
-            ...doc.data()
-          }
-        })
+        const allSurveys = docs.map(doc => { return { id: doc.id, ...doc.data() } })
+        const surveys = allSurveys.filter(survey => survey.user === userId)
         callback(surveys)
         return surveys
       })

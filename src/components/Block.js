@@ -54,7 +54,7 @@ export default function Block ({ blocks, setBlocks }) {
         blocks.map((block, i) => (
           <FormStyled key={i}>
             <HeaderStyled>
-              <input type="text" placeholder="Name block" value={block.title} onChange={evt => handleChangeTitle(evt, i)} />
+              <input type="text" placeholder="Name block" value={block.title} onChange={evt => handleChangeTitle(evt, i)} autoComplete="false" />
               <Dropdown options={options} onSelect={(type) => changeTypeBlock(i, type, block.type)} value={block.type} />
             </HeaderStyled>
             <SectionStyled>
@@ -108,6 +108,7 @@ function RadioComponent ({ options, setOptions }) {
                 placeholder="Write name option here"
                 value={option.value}
                 onChange={evt => handleChange(evt, i)}
+                autoComplete="false"
               />
               <FiTrash2 size={20} onClick={() => removeOption(i)}/>
             </RadioStyled>

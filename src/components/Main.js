@@ -16,7 +16,7 @@ import { TiInfo } from 'react-icons/ti'
 import useUser from 'hooks/useUser'
 
 export default function Main ({ children, survey, blocks }) {
-  const { route, query: { identifier }, push } = useRouter()
+  const { route, query: { identifier: [identifier] }, push } = useRouter()
   const mainContentRef = useRef(null)
   const { publishSurvey } = useFirebase()
   const user = useUser()
@@ -26,8 +26,8 @@ export default function Main ({ children, survey, blocks }) {
     element.style.height = `${element.offsetHeight}px`
   }, [])
 
-  const handlePublish = () => {
-    publishSurvey(identifier, blocks)
+  const handlePublish = async () => {
+    await publishSurvey(identifier, blocks)
     push(`/creator/${identifier}`)
   }
 

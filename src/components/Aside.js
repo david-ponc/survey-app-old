@@ -6,19 +6,24 @@ import { BiPlus } from 'react-icons/bi'
 import CreateSurveyModal from 'components/CreateSurveyModal'
 import { useRouter } from 'next/router'
 import useFirebase from 'hooks/useFirebase'
+import useUser from 'hooks/useUser'
 
 export default function Aside ({ surveys: initialSurveys }) {
   const [surveys, setSurveys] = useState(initialSurveys)
   const { query: { identifier } } = useRouter()
   const [visible, setVisible] = useState(false)
   const { getSurveysObserver } = useFirebase()
+  const user = useUser()
 
   useEffect(() => {
-    const unobserve = getSurveysObserver(setSurveys)
-    return () => {
-      unobserve()
+    let unobserve
+    if (user) {
+      unobserve = getSurveysObserver(setSurveys, user.uid)
     }
-  }, [])
+    return () => {
+      unobserve && unobserve()
+    }
+  }, [user])
 
   const toggleModal = () => {
     setVisible(!visible)
