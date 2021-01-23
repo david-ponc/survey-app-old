@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styled from 'styled-components'
 
 export const MainStyled = styled.main`
@@ -35,4 +36,8 @@ export const AlertStyled = styled.span`
   font-weight: 500;
   font-size: 0.875rem;
   margin-bottom: 1.5rem;
+`
+
+export const ImageStyled = styled(Image)`
+  border-radius: 50%;
 `

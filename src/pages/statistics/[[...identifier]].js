@@ -18,9 +18,10 @@ export default function Statistics ({ surveys, survey }) {
 }
 
 export async function getServerSideProps ({ params }) {
+  const [identifier] = params?.identifier
   const { getSurveys, getSurveyByIdentifier } = useFirebase()
   const surveys = await getSurveys()
-  const survey = await getSurveyByIdentifier(params.identifier)
+  const survey = await getSurveyByIdentifier(identifier)
   return {
     props: {
       surveys,

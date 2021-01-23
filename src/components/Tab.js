@@ -10,10 +10,10 @@ export default function Tab () {
     <SectionStyled>
       <NavStyled>
         <Link href={`/creator/${identifier}`}>
-          <LinkStyled active={active === '/creator/[identifier]'}>Creator</LinkStyled>
+          <LinkStyled active={active === '/creator/[[...identifier]]'}>Creator</LinkStyled>
         </Link>
         <Link href={`/statistics/${identifier}`}>
-          <LinkStyled active={active === '/statistics/[identifier]'}>Statistics</LinkStyled>
+          <LinkStyled active={active === '/statistics/[[...identifier]]'}>Statistics</LinkStyled>
         </Link>
       </NavStyled>
     </SectionStyled>

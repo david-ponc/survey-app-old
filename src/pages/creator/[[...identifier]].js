@@ -33,8 +33,13 @@ const initialBlocks = [
 
 export async function getServerSideProps ({ params, ...ctx }) {
   const { getSurveys, getSurveyByIdentifier } = useFirebase()
+  let survey = {}
+  if (params?.identifier) {
+    const [identifier] = params.identifier
+    survey = await getSurveyByIdentifier(identifier)
+  }
   const surveys = await getSurveys()
-  const survey = await getSurveyByIdentifier(params.identifier)
+
   if (!survey) {
     redirectUser(ctx, '/')
   }

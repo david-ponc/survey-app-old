@@ -7,5 +7,8 @@ module.exports = {
         permanent: true
       }
     ]
+  },
+  images: {
+    domains: ['lh3.googleusercontent.com']
   }
 }

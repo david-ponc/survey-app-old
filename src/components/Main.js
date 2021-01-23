@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { MainStyled, MainContentStyled, ButtonsStyled, AlertStyled } from 'styles/components/main'
+import { MainStyled, MainContentStyled, ButtonsStyled, AlertStyled, ImageStyled } from 'styles/components/main'
 import Header from 'components/Header'
 import Tab from 'components/Tab'
 import { AvatarStyled } from 'styles/components/header'
@@ -13,11 +13,13 @@ import { useRouter } from 'next/router'
 import useFirebase from 'hooks/useFirebase'
 import { IoClose } from 'react-icons/io5'
 import { TiInfo } from 'react-icons/ti'
+import useUser from 'hooks/useUser'
 
 export default function Main ({ children, survey, blocks }) {
   const { route, query: { identifier }, push } = useRouter()
   const mainContentRef = useRef(null)
   const { publishSurvey } = useFirebase()
+  const user = useUser()
 
   useEffect(() => {
     const element = mainContentRef.current
@@ -34,12 +36,12 @@ export default function Main ({ children, survey, blocks }) {
       <Header>
         <h2>{survey.name || 'Name survey'}</h2>
         <AvatarStyled>
-          <FaUserCircle size={26} />
-          David Ponce
+          {user?.photoURL ? <ImageStyled src={user.photoURL} width={32} height={32}/> : <FaUserCircle size={26} />}
+          {user?.displayName ? user.displayName : 'loading...'}
           <HiChevronDown/>
         </AvatarStyled>
-        {route === '/statistics/[identifier]' && <Button actions={actions} droppable>Export</Button>}
-        {route === '/creator/[identifier]' && (
+        {route === '/statistics/[[...identifier]]' && <Button actions={actions} droppable>Export</Button>}
+        {route === '/creator/[[...identifier]]' && (
           <ButtonsStyled>
             <Button onClick={handlePublish}>Publish</Button>
             {survey.survey.length > 1 && <Button><RiShareLine size={17}/></Button>}
