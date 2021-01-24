@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { MainStyled, MainContentStyled, ButtonsStyled, AlertStyled, ImageStyled } from 'styles/components/main'
+import { MainStyled, MainContentStyled, ButtonsStyled, AlertStyled, ImageStyled, DivStyled, IconStyled } from 'styles/components/main'
 import Header from 'components/Header'
 import Tab from 'components/Tab'
 import { AvatarStyled } from 'styles/components/header'
@@ -16,25 +16,31 @@ import { TiInfo } from 'react-icons/ti'
 import useUser from 'hooks/useUser'
 
 export default function Main ({ children, survey, blocks }) {
-  const { route, query: { identifier: [identifier] }, push } = useRouter()
+  const { route, query, push } = useRouter()
   const mainContentRef = useRef(null)
   const { publishSurvey } = useFirebase()
   const user = useUser()
 
   useEffect(() => {
+    console.log(survey)
     const element = mainContentRef.current
     element.style.height = `${element.offsetHeight}px`
   }, [])
 
   const handlePublish = async () => {
-    await publishSurvey(identifier, blocks)
-    push(`/creator/${identifier}`)
+    const [identifier] = query.identifier
+    if (identifier) {
+      await publishSurvey(identifier, blocks)
+      push(`/creator/${identifier}`)
+    } else {
+      console.log('Yo must select survey to publish them')
+    }
   }
 
   return (
     <MainStyled>
       <Header>
-        <h2>{survey.name || 'Name survey'}</h2>
+        <h2>{survey.name || 'No survey selected'}</h2>
         <AvatarStyled>
           {user?.photoURL ? <ImageStyled src={user.photoURL} width={32} height={32}/> : <FaUserCircle size={26} />}
           {user?.displayName ? user.displayName : 'loading...'}
@@ -48,18 +54,34 @@ export default function Main ({ children, survey, blocks }) {
           </ButtonsStyled>
         )}
       </Header>
-       <Tab />
+      <Tab />
       <MainContentStyled ref={mainContentRef}>
-        {survey.survey.length < 2 && (
-          <AlertStyled>
-            <TiInfo size={20} />
-            You {"don't"} have enough blocks to publish this survey
-            <IoClose />
-          </AlertStyled>
-        ) }
-        {children}
+        {survey.name && (
+          <>
+            {survey.survey.length < 2 && (
+              <AlertStyled>
+                <TiInfo size={20} />
+                You {"don't"} have enough blocks to publish this survey
+                <IoClose />
+              </AlertStyled>
+            ) }
+            {children}
+          </>
+        )}
+        {!survey.name && (
+          <AlternativeView />
+        )}
       </MainContentStyled>
     </MainStyled>
+  )
+}
+
+function AlternativeView () {
+  return (
+    <DivStyled>
+      <IconStyled />
+      <p>Create a new survey to starting or select anyone created</p>
+    </DivStyled>
   )
 }
 

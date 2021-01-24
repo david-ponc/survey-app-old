@@ -8,5 +8,6 @@ export const colors = css`
     --gray-400: #EFF2F6;
     --gray-500: #F5F7FA;
     --gray-600: #FFFFFF;
+    --primary: #456DD4;
   }
 `

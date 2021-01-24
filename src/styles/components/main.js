@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { TiInfoLarge } from 'react-icons/ti'
 import styled from 'styled-components'
 
 export const MainStyled = styled.main`
@@ -40,4 +41,29 @@ export const AlertStyled = styled.span`
 
 export const ImageStyled = styled(Image)`
   border-radius: 50%;
+`
+
+export const DivStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-200);
+  }
+`
+
+export const IconStyled = styled(TiInfoLarge)`
+  width: 64px;
+  height: 64px;
+  padding: 0.75rem;
+  background: var(--gray-300);
+  color: var(--primary);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
 `
